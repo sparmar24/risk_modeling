@@ -8,15 +8,11 @@ import seaborn as sns
 sns.set()
 
 ld = pd.read_csv("loan_data_2007_2014.csv")
-#ld_backup = ld.copy()
 
-# print(ld.describe())
-# print(ld.info())
-# pd.options.display.max_columns = None
-pd.options.display.max_rows = None
+#pd.options.display.max_rows = None
 # print(ld.isnull().sum())
 
-''' preprocessing of time related features'''
+''' preprocessing features'''
 # print(ld['term'].unique())
 ld['term_int'] = ld['term'].str.replace('months', '')
 ld['term_int'] = pd.to_numeric(ld['term_int'])
@@ -76,14 +72,10 @@ ld['good_bad'] = np.where(ld['loan_status'].isin(['Default',
                                                   'Late (31-120 days)',
                                                   'Does not meet the credit policy. Status:Charged Off',]), 0, 1)
 
-ld.to_csv("loan_data_2007_2014_preprocessed.csv")
+#ld.to_csv("loan_data_2007_2014_preprocessed.csv")
 
 
-''' Independent variables '''
-''' Split the data '''
-# X = ld.drop('good_bad', axis = 1)
-# y = ld['good_bad']
-
+''' preprocessing independent variables ''' ''' Split the data into train and test sets '''
 from sklearn.model_selection import train_test_split
 ld_train_X, ld_test_X, ld_train_y, ld_test_y = train_test_split(ld.drop('good_bad', axis = 1), ld['good_bad'], test_size = 0.2, random_state = 1)
 
@@ -112,31 +104,6 @@ def woe_discrete(df, input_variable, target):
     df['IV']          = df['IV'].sum()
     return df
 
-# call the function for all dummy variables one by one and plot the WoE (Weight Of Evidence)
-'''
-def try_fun(list):
-    for _ in list:
-        df_temp = woe_discrete(df_input, list, df_target)
-        #test1 = _ 
-        return df_temp 
-
-list1 = ['grade', 'home_ownership']
-
-for _ in list1:
-    funtest = try_fun(list1)
-    print(funtest)
-'''
-
-
-# df_temp = woe_discrete(df_input, 'grade', df_target)
-# df_temp = woe_discrete(df_input, 'home_ownership', df_target)
-# df_temp = woe_discrete(df_input, 'addr_state', df_target)
-# df_temp = woe_discrete(df_input, 'verification_status', df_target)
-df_temp = woe_discrete(df_input, 'purpose', df_target)
-# df_temp = woe_discrete(df_input, 'initial_list_status', df_target)
-# print(df_temp)
-
-
 ''' WoE visualization '''
 def plot_by_woe(df_woe, rotation_x_labels = 0):
     x = np.array(df_woe.iloc[:, 0].apply(str))
@@ -151,6 +118,15 @@ def plot_by_woe(df_woe, rotation_x_labels = 0):
     plt.show()
 
 
-plot_by_woe(df_temp)
+''' call the function for all dummy variables and plot the WoE (Weight Of Evidence)'''
+list1 = ['grade', 'home_ownership', 'addr_state', 'verification_status', 'purpose', 'initial_list_status']
+def try_fun(df_in, my_list, df_out):
+    for _ in my_list:
+        df_temp = woe_discrete(df_in, _, df_out)
+        print(df_temp)
+        plot_by_woe(df_temp)
+
+funtest = try_fun(df_input, list1, df_target)
+
 
 
