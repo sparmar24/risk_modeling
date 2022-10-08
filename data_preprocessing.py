@@ -114,7 +114,7 @@ def plot_by_woe(df_woe, rotation_x_labels = 0):
     plt.xlabel(df_woe.columns[0])
     plt.ylabel("Weight of Evidence")
     plt.xticks(rotation = rotation_x_labels)
-    plt.savefig("woe_"+ df_woe.columns[0])
+    #plt.savefig("woe_"+ df_woe.columns[0])
     plt.show()
 
 
@@ -127,6 +127,61 @@ def try_fun(df_in, my_list, df_out):
         plot_by_woe(df_temp)
 
 funtest = try_fun(df_input, list1, df_target)
+
+
+''' by plotting home ownership we got idea of coarse classing, by adding some categories to one '''
+# No need to do coarse classing for "grade", "verification_status", and "initial_list_status"
+
+''' For home_ownership '''
+df_input['home_ownership:RENT_OTHER_NONE_ANY'] = sum([df_input['home_ownership:RENT'],
+                                                     df_input['home_ownership:OTHER'],
+                                                     df_input['home_ownership:NONE'],
+                                                     df_input['home_ownership:ANY']])
+
+''' For addr_state '''
+if ['addr_state:ND'] in df_input.columns.values:
+    pass
+else:
+    df_input['addr_state:ND'] = 0
+
+df_input['addr_state:ND_NE_IA_NV_FL_HI_AL']= sum([df_input['addr_state:ND'], df_input['addr_state:NE'],
+                                                df_input['addr_state:IA'], df_input['addr_state:NV'],
+                                                df_input['addr_state:FL'], df_input['addr_state:HI'],
+                                                df_input['addr_state:AL']])
+df_input['addr_state:NM_VA']               = sum([df_input['addr_state:NM'], df_input['addr_state:VA']])
+df_input['addr_state:OK_TN_MO_LA_MD_NC']   = sum([df_input['addr_state:OK'], df_input['addr_state:TN'],
+                                              df_input['addr_state:MO'], df_input['addr_state:LA'],
+                                              df_input['addr_state:MD'], df_input['addr_state:NC']])
+df_input['addr_state:UT_KY_AZ_NJ']         = sum([df_input['addr_state:UT'], df_input['addr_state:KY'],
+                                              df_input['addr_state:AZ'], df_input['addr_state:NJ']])
+df_input['addr_state:AR_MI_PA_OH_MN']      = sum([df_input['addr_state:AR'], df_input['addr_state:MI'],
+                                              df_input['addr_state:PA'], df_input['addr_state:OH'],
+                                              df_input['addr_state:MN']])
+df_input['addr_state:RI_MA_DE_SD_IN']      = sum([df_input['addr_state:RI'], df_input['addr_state:MA'],
+                                              df_input['addr_state:DE'], df_input['addr_state:SD'],
+                                              df_input['addr_state:IN']])
+df_input['addr_state:GA_WA_OR']            = sum([df_input['addr_state:GA'], df_input['addr_state:WA'],
+                                              df_input['addr_state:OR']])
+df_input['addr_state:WI_MT']               = sum([df_input['addr_state:WI'], df_input['addr_state:MT']])
+df_input['addr_state:IL_CT']               = sum([df_input['addr_state:IL'], df_input['addr_state:CT']])
+df_input['addr_state:KS_SC_CO_VT_AK_MS']   = sum([df_input['addr_state:KS'], df_input['addr_state:SC'],
+                                              df_input['addr_state:CO'], df_input['addr_state:VT'],
+                                              df_input['addr_state:AK'], df_input['addr_state:MS']])
+df_input['addr_state:WV_NH_WY_DC_ME_ID']   = sum([df_input['addr_state:WV'], df_input['addr_state:NH'],
+                                              df_input['addr_state:WY'], df_input['addr_state:DC'],
+                                              df_input['addr_state:ME'], df_input['addr_state:ID']])
+
+
+
+''' For purpose '''
+df_input['purpose:educ__sm_b__wedd__ren_en__mov__house'] = sum([df_input['purpose:educational'], df_input['purpose:small_business'],
+                                                                df_input['purpose:wedding'], df_input['purpose:renewable_energy'],
+                                                                df_input['purpose:moving'], df_input['purpose:house']])
+df_input['purpose:oth__med__vacation']                   = sum([df_input['purpose:other'], df_input['purpose:medical'],
+                                                                df_input['purpose:vacation']])
+df_input['purpose:major_purch__car__home_impr']          = sum([df_input['purpose:major_purchase'], df_input['purpose:car'],
+                                                                df_input['purpose:home_improvement']])
+
 
 
 
