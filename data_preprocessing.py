@@ -105,7 +105,7 @@ def woe_discrete(df, input_variable, target):
     return df
 
 ''' WoE visualization '''
-def plot_by_woe(df_woe, rotation_x_labels = 0):
+def plot_by_woe(df_woe, rotation_x_labels = 90):
     x = np.array(df_woe.iloc[:, 0].apply(str))
     y = df_woe['woe']
     plt.figure(figsize = (15, 6))
@@ -114,7 +114,7 @@ def plot_by_woe(df_woe, rotation_x_labels = 0):
     plt.xlabel(df_woe.columns[0])
     plt.ylabel("Weight of Evidence")
     plt.xticks(rotation = rotation_x_labels)
-    #plt.savefig("woe_"+ df_woe.columns[0])
+    plt.savefig("woe_"+ df_woe.columns[0])
     plt.show()
 
 
@@ -181,6 +181,47 @@ df_input['purpose:oth__med__vacation']                   = sum([df_input['purpos
                                                                 df_input['purpose:vacation']])
 df_input['purpose:major_purch__car__home_impr']          = sum([df_input['purpose:major_purchase'], df_input['purpose:car'],
                                                                 df_input['purpose:home_improvement']])
+
+
+
+''' preprocessing continuous variables '''
+def woe_continuous(df, input_variable, target):
+    df = pd.concat([df[input_variable], target], axis = 1)
+    df = pd.concat([df.groupby(df.columns.values[0], as_index=False) [df.columns.values[1]].count(),
+                    df.groupby(df.columns.values[0], as_index=False) [df.columns.values[1]].mean()], axis = 1)
+    df = df.iloc[:, [0, 1, 3]]
+    df.columns        = [df.columns.values[0], 'n_obs', 'prop_good']
+    df['prop_n_obs']  = df['n_obs'] / df['n_obs'].sum()
+    df['n_good']      = df['prop_good'] * df['n_obs']
+    df['n_bad']       = (1 - df['prop_good']) * df['n_obs']
+    df['prop_n_good'] = df['n_good'] / df['n_good'].sum()
+    df['prop_n_bad']  = df['n_bad'] / df['n_bad'].sum()
+    df['woe']         = np.log(df['prop_n_good'] / df['prop_n_bad'])
+    # df = df.sort_values(['woe'])
+    # df = df.reset_index(drop=True)
+    df['IV']          = (df['prop_n_good'] - df['prop_n_bad']) * df['woe']
+    df['IV']          = df['IV'].sum()
+    return df
+
+
+
+''' call the function for all continuous dummy variables and plot the WoE (Weight Of Evidence)'''
+list1 = ['term_int', 'emp_length_int', 'mths_since_issue_d', 'int_rate', 'funded_amnt',
+         'mths_since_earliest_cr_line', 'delinq_2yrs', 'inq_last_6mths', 'open_acc', 
+         'pub_rec', 'total_acc', 'acc_now_delinq', 'total_rev_hi_lim', 'installment',
+         'annual_inc', 'mths_since_last_delinq', 'dti', 'mths_since_last_record']
+
+def try_fun(df_in, my_list, df_out):
+    for _ in my_list:
+        df_temp = woe_continuous(df_in, _, df_out)
+        print(df_temp)
+        plot_by_woe(df_temp)
+
+funtest_cont = try_fun(df_input, list1, df_target)
+
+
+
+
 
 
 
