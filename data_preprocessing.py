@@ -124,7 +124,7 @@ def try_fun(df_in, my_list, df_out):
     for _ in my_list:
         df_temp = woe_discrete(df_in, _, df_out)
         print(df_temp)
-        plot_by_woe(df_temp)
+        #plot_by_woe(df_temp)
 
 funtest = try_fun(df_input, list1, df_target)
 
@@ -214,8 +214,8 @@ list1 = ['term_int', 'emp_length_int', 'mths_since_issue_d', 'int_rate', 'funded
 def try_fun(df_in, my_list, df_out):
     for _ in my_list:
         df_temp = woe_continuous(df_in, _, df_out)
-        print(df_temp)
-        plot_by_woe(df_temp)
+        #print(df_temp)
+        #plot_by_woe(df_temp)
 
 funtest_cont = try_fun(df_input, list1, df_target)
 
@@ -362,6 +362,23 @@ df_input['mths_since_last_record:>=86'] = np.where((df_input['mths_since_last_re
 
 
 
+ld_train_X = df_input
+print(ld_train_X.shape)
+print(ld_train_y.shape)
 
+# ld_test_X = df_input
+# print(ld_test_X.shape)
+# print(ld_test_y.shape)
+
+
+# ld_train_X.to_csv("load_data_inputs_train.csv")
+# ld_train_y.to_csv("load_data_targets_train.csv")
+# ld_test_X.to_csv("load_data_inputs_test.csv")
+# ld_test_y.to_csv("load_data_targets_test.csv")
+
+# print(load_data_inputs_train.shape)
+# print(load_data_targets_train.shape)
+# print(load_data_inputs_test.shape)
+# print(load_data_targets_test.shape)
 
 
