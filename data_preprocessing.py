@@ -79,11 +79,11 @@ ld['good_bad'] = np.where(ld['loan_status'].isin(['Default',
 from sklearn.model_selection import train_test_split
 ld_train_X, ld_test_X, ld_train_y, ld_test_y = train_test_split(ld.drop('good_bad', axis = 1), ld['good_bad'], test_size = 0.2, random_state = 1)
 
-df_input  = ld_train_X
-df_target = ld_train_y
+# df_input  = ld_train_X
+# df_target = ld_train_y
 
-# df_input  = ld_test_X
-# df_target = ld_test_y
+df_input  = ld_test_X
+df_target = ld_test_y
 
 ''' WoE_discrete for each independent feature '''
 def woe_discrete(df, input_variable, target):
@@ -362,19 +362,19 @@ df_input['mths_since_last_record:>=86'] = np.where((df_input['mths_since_last_re
 
 
 
-ld_train_X = df_input
-print(ld_train_X.shape)
-print(ld_train_y.shape)
+# ld_train_X = df_input
+# print(ld_train_X.shape)
+# print(ld_train_y.shape)
 
-# ld_test_X = df_input
-# print(ld_test_X.shape)
-# print(ld_test_y.shape)
+ld_test_X = df_input
+print(ld_test_X.shape)
+print(ld_test_y.shape)
 
 
-ld_train_X.to_csv("load_data_inputs_train.csv")
-ld_train_y.to_csv("load_data_targets_train.csv")
-# ld_test_X.to_csv("load_data_inputs_test.csv")
-# ld_test_y.to_csv("load_data_targets_test.csv")
+# ld_train_X.to_csv("load_data_inputs_train.csv")
+# ld_train_y.to_csv("load_data_targets_train.csv")
+ld_test_X.to_csv("load_data_inputs_test.csv")
+ld_test_y.to_csv("load_data_targets_test.csv")
 
 # print(load_data_inputs_train.shape)
 # print(load_data_targets_train.shape)
