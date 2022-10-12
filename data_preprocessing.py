@@ -1,5 +1,5 @@
-##### data preprocessing for  credit risk modeling analysis #####
-#################################################################
+##### Preprocessing loan data for  credit risk modeling analysis #####
+######################################################################
 
 import pandas as pd
 import numpy as np
@@ -360,8 +360,6 @@ df_input['mths_since_last_record:81-86'] = np.where((df_input['mths_since_last_r
 df_input['mths_since_last_record:>=86'] = np.where((df_input['mths_since_last_record'] >= 86), 1, 0)
 
 
-
-
 # ld_train_X = df_input
 # print(ld_train_X.shape)
 # print(ld_train_y.shape)
@@ -370,15 +368,10 @@ ld_test_X = df_input
 print(ld_test_X.shape)
 print(ld_test_y.shape)
 
-
 # ld_train_X.to_csv("load_data_inputs_train.csv")
 # ld_train_y.to_csv("load_data_targets_train.csv")
-ld_test_X.to_csv("load_data_inputs_test.csv")
-ld_test_y.to_csv("load_data_targets_test.csv")
-
-# print(load_data_inputs_train.shape)
-# print(load_data_targets_train.shape)
-# print(load_data_inputs_test.shape)
-# print(load_data_targets_test.shape)
+# ld_test_X.to_csv("load_data_inputs_test.csv")
+# ld_test_y.to_csv("load_data_targets_test.csv")
 
 
+''' Preprocessing complete '''
