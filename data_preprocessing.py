@@ -371,8 +371,8 @@ print(ld_train_y.shape)
 # print(ld_test_y.shape)
 
 
-# ld_train_X.to_csv("load_data_inputs_train.csv")
-# ld_train_y.to_csv("load_data_targets_train.csv")
+ld_train_X.to_csv("load_data_inputs_train.csv")
+ld_train_y.to_csv("load_data_targets_train.csv")
 # ld_test_X.to_csv("load_data_inputs_test.csv")
 # ld_test_y.to_csv("load_data_targets_test.csv")
 
