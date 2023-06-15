@@ -1,6 +1,15 @@
 # Credit Risk Modeling
 
+This project measures the credit risk analysis on a loan data available on kaggle. The loan data is first preprocessed from its raw form to an informed manner. The process called data_preprocessing can be find at "risk_modeling/src/data_preprocessing.py". \\
 
+The data have been organised into dummy variables, categorical variables, to understand the patterns in data.
+
+To measure the credit risk, the three different terms has been calculated.
+## Credit risk = PD (Probability of Default) *
+                 LGD (Loss at given Default) *
+                 EAD (Expected loss at Default)
+
+  To predict the three different terms different machine learning algorithms have been deployed such as logistic regression, linear regression etc.
 
 
 <h2 align="center"> </h2>
